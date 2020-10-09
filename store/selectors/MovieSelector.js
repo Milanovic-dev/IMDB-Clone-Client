@@ -6,3 +6,8 @@ export const makeSelectMovieList = createSelector(
   selectMovieDomain,
   (substate) => substate.movies
 );
+
+export const makeSelectPageMovie = createSelector(
+  selectMovieDomain,
+  (substate) => substate.pageMovie
+);

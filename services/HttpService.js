@@ -4,7 +4,7 @@ import config from '../config';
 
 export class HttpService {
   constructor() {
-    this.client = axios.create({ baseURL: 'http://localhost/api' });
+    this.client = axios.create(clientConfig);
 
     this.responseInterceptors = [];
     this.badResponseInterceptors = [];
@@ -83,7 +83,7 @@ export class HttpService {
 }
 
 const clientConfig = {
-  baseURL: config.API_BASE_URL
+  baseURL: 'http://localhost/api'
 };
 
 export default new HttpService(clientConfig);
