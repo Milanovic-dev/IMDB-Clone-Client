@@ -1,7 +1,7 @@
 import BaseApiService from './BaseApiService';
 
 const ENDPOINTS = {
-  ME: '/api/auth/me', // replace Next API endpoint
+  ME: '/auth/me', // replace Next API endpoint
   CHANGE_PASSWORD: '/user/change-password',
   USER: '/user'
 };

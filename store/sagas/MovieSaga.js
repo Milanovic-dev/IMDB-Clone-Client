@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import MovieService from '../../services/MovieService';
-import { setMovies, setPageMovie } from '../actions/MovieActions';
+import { setLikeError, setMovies, setPageMovie } from '../actions/MovieActions';
 
 export function* getMovies({ payload }) {
   try {
@@ -17,5 +17,25 @@ export function* getPageMovie({ payload }) {
     yield put(setPageMovie(data));
   } catch (error) {
     console.error(error);
+  }
+}
+
+export function* likeMovie({ payload }) {
+  try {
+    yield call(MovieService.like, payload);
+  } catch (error) {
+    if (error.response.status === 400) {
+      yield put(setLikeError(error.response.data.message));
+    }
+  }
+}
+
+export function* dislikeMovie({ payload }) {
+  try {
+    yield call(MovieService.dislike, payload);
+  } catch (error) {
+    if (error.response.status === 400) {
+      yield put(setLikeError(error.response.data.message));
+    }
   }
 }
