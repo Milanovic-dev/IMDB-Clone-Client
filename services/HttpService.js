@@ -3,15 +3,15 @@ import foreach from 'lodash/each';
 import config from '../config';
 
 export class HttpService {
-  constructor(clientConfig = {}) {
-    this.client = axios.create(clientConfig);
+  constructor() {
+    this.client = axios.create({ baseURL: 'http://localhost/api' });
 
     this.responseInterceptors = [];
     this.badResponseInterceptors = [];
 
     this.initializeResponseInterceptors();
 
-    this.attachBadResponseInterceptor(error => {
+    this.attachBadResponseInterceptor((error) => {
       this.handleBadResponse({ error });
     });
   }
@@ -27,16 +27,16 @@ export class HttpService {
           break;
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
     return Promise.reject(error);
   };
 
-  setRefreshRetry = callback => {
+  setRefreshRetry = (callback) => {
     this.refreshRetry = callback;
   };
 
-  setUnauthorizedCallback = callback => {
+  setUnauthorizedCallback = (callback) => {
     this.unauthorizedCallback = callback;
   };
 
@@ -45,10 +45,10 @@ export class HttpService {
   };
 
   removeHeaders = (headers = []) => {
-    headers.forEach(key => delete this.client.defaults.headers[key]);
+    headers.forEach((key) => delete this.client.defaults.headers[key]);
   };
 
-  attachResponseInterceptor = callback => {
+  attachResponseInterceptor = (callback) => {
     this.responseInterceptors.push(callback);
   };
 
@@ -56,22 +56,22 @@ export class HttpService {
     this.client.interceptors.request.use(interceptor);
   }
 
-  attachBadResponseInterceptor = callback => {
+  attachBadResponseInterceptor = (callback) => {
     this.badResponseInterceptors.push(callback);
   };
 
   initializeResponseInterceptors = () => {
     this.client.interceptors.response.use(
-      response => {
-        foreach(this.responseInterceptors, i => {
+      (response) => {
+        foreach(this.responseInterceptors, (i) => {
           i(response);
         });
 
         return response;
       },
-      error => {
+      (error) => {
         if (error.response && error.response.status) {
-          foreach(this.badResponseInterceptors, i => {
+          foreach(this.badResponseInterceptors, (i) => {
             i(error);
           });
         }
