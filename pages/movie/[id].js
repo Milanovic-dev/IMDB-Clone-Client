@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { combineReducers } from 'redux';
 import {
   dislikeMovie,
   getMovie,
-  likeMovie
+  likeMovie,
+  setLikeError
 } from '../../store/actions/MovieActions';
 import {
   makeSelectLikeError,
@@ -12,9 +14,8 @@ import {
 } from '../../store/selectors/MovieSelector';
 
 const MoviePage = () => {
-  const router = useRouter();
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const { id } = router.query;
 
   const handleFetch = useCallback(() => dispatch(getMovie(id)));
@@ -26,6 +27,9 @@ const MoviePage = () => {
 
   useEffect(() => {
     handleFetch();
+    return () => {
+      dispatch(setLikeError(''));
+    };
   }, []);
 
   if (!movie) return null;

@@ -2,43 +2,25 @@ import { createSelector } from 'reselect';
 
 import reducers from '../reducers';
 
-const selectUserDomain = state => state.user || reducers;
+const selectUserDomain = (state) => state.user || reducers;
 
 const makeSelectUser = () =>
-  createSelector(
-    selectUserDomain,
-    substate => substate
-  );
+  createSelector(selectUserDomain, (substate) => substate);
 
 const makeSelectUserAuthStatus = () =>
-  createSelector(
-    selectUserDomain,
-    substate => substate.auth
-  );
+  createSelector(selectUserDomain, (substate) => substate.auth);
 
 const makeSelectUserData = () =>
-  createSelector(
-    selectUserDomain,
-    substate => substate.user
-  );
+  createSelector(selectUserDomain, (substate) => substate.user);
 
 const makeSelectUserLoader = () =>
-  createSelector(
-    selectUserDomain,
-    substate => substate.loader
-  );
+  createSelector(selectUserDomain, (substate) => substate.loader);
 
 const makeSelectUserPasswordChangeState = () =>
-  createSelector(
-    selectUserDomain,
-    substate => substate.passwordChanged
-  );
+  createSelector(selectUserDomain, (substate) => substate.passwordChanged);
 
 const makeSelectUserPasswordLoader = () =>
-  createSelector(
-    selectUserDomain,
-    substate => substate.passwordChangeLoader
-  );
+  createSelector(selectUserDomain, (substate) => substate.passwordChangeLoader);
 
 export default makeSelectUser;
 export {
