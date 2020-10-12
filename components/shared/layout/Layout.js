@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Header from './Header';
 
 const Layout = ({ children, hideHeader }) => (
-  <div>
+  <div style={{ fontFamily: 'Menlo' }}>
     {!hideHeader && <Header />}
     {children}
   </div>

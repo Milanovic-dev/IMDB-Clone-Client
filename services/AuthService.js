@@ -3,9 +3,9 @@ import jsCookie from 'js-cookie';
 import BaseApiService from './BaseApiService';
 
 const ENDPOINTS = {
-  LOGIN: '/api/auth/login', // replace Next API endpoint
+  LOGIN: '/auth/login', // replace Next API endpoint
   SIGN_UP: '/auth/register',
-  LOGOUT: '/api/auth/logout',
+  LOGOUT: '/auth/logout',
   FORGOT_PASSWORD: '/user/forgot-password',
   RESET_PASSWORD: '/user/reset-password',
   FACEBOOK: '/auth/social/facebook',
@@ -26,7 +26,6 @@ class AuthService extends BaseApiService {
 
   login = async (loginData) => {
     const { data } = await this.apiClient.post(ENDPOINTS.LOGIN, loginData);
-
     this.createSession(data);
 
     this.attachAuthHeader(data.access_token);

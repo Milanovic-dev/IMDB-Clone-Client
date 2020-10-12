@@ -6,3 +6,13 @@ export const makeSelectMovieList = createSelector(
   selectMovieDomain,
   (substate) => substate.movies
 );
+
+export const makeSelectPageMovie = createSelector(
+  selectMovieDomain,
+  (substate) => substate.pageMovie
+);
+
+export const makeSelectLikeError = createSelector(
+  selectMovieDomain,
+  (substate) => substate.error
+);

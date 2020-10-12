@@ -25,7 +25,7 @@ const Header = () => {
   const renderUserHeader = () =>
     auth ? (
       <div>
-        <p>{`${user.first_name} ${user.last_name}`}</p>
+        <p>{`${user.firstName} ${user.lastName}`}</p>
         <button type="button" onClick={handleSignOut}>
           {t('signOut')}
         </button>

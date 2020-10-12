@@ -1,8 +1,11 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMovies } from '../store/actions/MovieActions';
 import { makeSelectMovieList } from '../store/selectors/MovieSelector';
 import { debounce } from '../utils/debounce';
+import { Link } from '../i18n';
+
+const debounceWaitTime = 750;
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -10,11 +13,17 @@ const Index = () => {
   const inputRef = useRef();
 
   const handleFetch = useCallback(() =>
-    dispatch(getMovies({ limit: 3, page: 0, title: inputRef.current.value }))
+    dispatch(getMovies({ page: 0, title: inputRef.current.value }))
   );
+
   const handleChange = debounce(() => {
     handleFetch();
-  }, 750);
+  }, debounceWaitTime);
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
+
   return (
     <div>
       <input ref={inputRef} onChange={handleChange} placeholder="Search..." />
@@ -25,16 +34,21 @@ const Index = () => {
 
 const MovieList = ({ items }) => (
   <table>
-    {items.map((item) => (
-      <ul key={item.title}>
-        <li>{`${item.title}  ${item.description}`}</li>
-      </ul>
-    ))}
+    <tbody>
+      {items.map((item) => (
+        <tr key={item.id}>
+          <td>
+            <img src={item.image} alt="Img"></img>
+          </td>
+          <td>
+            <Link href={`/movie/${item.id}`}>{item.title}</Link>
+          </td>
+          <td>{item.description}</td>
+          <td>{item.genre}</td>
+        </tr>
+      ))}
+    </tbody>
   </table>
 );
-
-MovieList.propTypes = {
-  items: Array
-};
 
 export default Index;

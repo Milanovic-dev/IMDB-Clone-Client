@@ -28,8 +28,13 @@ import {
   GOOGLE_LOGIN
 } from '../actionTypes/SocialLoginActionTypes';
 import { handleFacebookLogin, handleGoogleLogin } from './SocialLoginSagas';
-import { GET_MOVIES } from '../actionTypes/MovieActionTypes';
-import { getMovies } from './MovieSaga';
+import {
+  DISLIKE_MOVIE,
+  GET_MOVIE,
+  GET_MOVIES,
+  LIKE_MOVIE
+} from '../actionTypes/MovieActionTypes';
+import { dislikeMovie, getMovies, getPageMovie, likeMovie } from './MovieSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -43,6 +48,9 @@ export default function* rootSaga() {
     takeLatest(GOOGLE_LOGIN, handleGoogleLogin),
     takeLatest(USER_EDIT, handleUserEdit),
     takeLatest(PASSWORD_CHANGE, handlePasswordChange),
-    takeLatest(GET_MOVIES, getMovies)
+    takeLatest(GET_MOVIES, getMovies),
+    takeLatest(GET_MOVIE, getPageMovie),
+    takeLatest(LIKE_MOVIE, likeMovie),
+    takeLatest(DISLIKE_MOVIE, dislikeMovie)
   ]);
 }
